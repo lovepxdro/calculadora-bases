@@ -2,6 +2,7 @@
 // versão 0.1 feita no dia 29/08/24 às 19:34 > criei a função de converter para a base 2
 // versão 0.2 feita no dia 29/08/24 às 19:37 > criei a função de converter para a base 8
 // versão 0.3 feita no dia 29/08/24 às 19:39 > criei a função de converter para a base 16
+// versão 0.4 feita no dia 29/08/24 às 19:41 > criei a função de converter para a base bcd
 
 #include <stdio.h>
 
@@ -52,12 +53,41 @@ void baseDezesseis(int n) {
     }
 }
 
+void baseBCD(int n) {
+    int digitos[10];
+    int i = 0;
+
+    while (n > 0) {
+        digitos[i] = n % 10;
+        n /= 10;
+        i++;
+    }
+  
+    for (int j = i - 1; j >= 0; j--) {
+        int binario[4] = {0, 0, 0, 0};
+
+        int num = digitos[j];
+        int k = 3;
+
+        while (num > 0) {
+            binario[k] = num % 2;
+            num /= 2;
+            k--;
+        }
+
+        for (k = 0; k < 4; k++) {
+            printf("%d", binario[k]);
+        }
+        printf(" ");
+    }
+}
+
 int main()
 {
     int n;
     scanf("%d", &n);
     
-    baseDezesseis(n);
+    baseBCD(n);
 
     return 0;
 }
