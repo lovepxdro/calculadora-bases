@@ -4,9 +4,10 @@
 // versão 0.3 feita no dia 29/08/24 às 19:39 > criei a função de converter para a base 16
 // versão 0.4 feita no dia 29/08/24 às 19:41 > criei a função de converter para a base bcd
 // versão 0.5 feita no dia 30/08/24 às 14:20 > criei a função de converter com complemento a 2
+// versão 0.6 feita no dia 30/08/24 às 19:34 > criei a função de converter para float e double
 
 #include <stdio.h>
-#include <stdint.h> // usada na função complemento2
+#include <stdint.h>
 
 void baseDois (int n){
     if(n>1){
@@ -91,7 +92,7 @@ void complemento2(int n){
     
     int new=-n;
     
-    uint16_t complemento2; // converter para 16 bits
+    uint16_t complemento2;
 
     if (new < 0) {
         complemento2 = (uint16_t)(~(-new) + 1);
@@ -104,12 +105,62 @@ void complemento2(int n){
     }
 }
 
+void printFloat(uint32_t num) {
+    for (int i = 31; i >= 0; i--) {
+        printf("%d", (num >> i) & 1);
+        if (i == 31 || i == 23) {
+            printf(" ");
+        }
+    }
+    printf("\n");
+}
+
+void printDouble(uint64_t num) {
+    for (int i = 63; i >= 0; i--) {
+        printf("%d", (num >> i) & 1);
+        if (i == 63 || i == 52) {
+            printf(" ");
+        }
+    }
+    printf("\n");
+}
+
+void floatToBinary(float f) {
+    uint32_t *num = (uint32_t*)&f;
+    uint32_t sign = (*num >> 31) & 1;
+    uint32_t exponent = (*num >> 23) & 0xFF;
+    uint32_t fraction = *num & 0x7FFFFF;
+
+    printf("Float: %f\n", f);
+    printf("Bits: ");
+    printFloat(*num);
+
+    printf("Sinal: %d\n", sign);
+    printf("Expoente: %u\n", exponent);
+    printf("Expoente com viés: %d\n", exponent - 127);
+    printf("Fração: 0x%X\n", fraction);
+}
+
+void doubleToBinary(double d) {
+    uint64_t *num = (uint64_t*)&d;
+    uint64_t sign = (*num >> 63) & 1;
+    uint64_t exponent = (*num >> 52) & 0x7FF;
+    uint64_t fraction = *num & 0xFFFFFFFFFFFFF;
+
+    printf("Double: %lf\n", d);
+    printf("Bits: ");
+    printDouble(*num);
+
+    printf("Sinal: %llu\n", sign);
+    printf("Expoente: %llu\n", exponent);
+    printf("Expoente com viés: %lld\n", (long long)(exponent - 1023));
+    printf("Fração: 0x%llX\n", fraction);
+}
+
 int main()
 {
     int n;
     scanf("%d", &n);
-    
-    complemento2(n);
 
     return 0;
 }
