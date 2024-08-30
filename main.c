@@ -3,8 +3,10 @@
 // versão 0.2 feita no dia 29/08/24 às 19:37 > criei a função de converter para a base 8
 // versão 0.3 feita no dia 29/08/24 às 19:39 > criei a função de converter para a base 16
 // versão 0.4 feita no dia 29/08/24 às 19:41 > criei a função de converter para a base bcd
+// versão 0.5 feita no dia 30/08/24 às 14:20 > criei a função de converter com complemento a 2
 
 #include <stdio.h>
+#include <stdint.h> // usada na função complemento2
 
 void baseDois (int n){
     if(n>1){
@@ -82,12 +84,32 @@ void baseBCD(int n) {
     }
 }
 
+void complemento2(int n){
+    if (n < -32768 || n > 32767) {
+        return;
+    }
+    
+    int new=-n;
+    
+    uint16_t complemento2; // converter para 16 bits
+
+    if (new < 0) {
+        complemento2 = (uint16_t)(~(-new) + 1);
+    } else {
+        complemento2 = (uint16_t)new;
+    }
+
+    for (int i = 15; i >= 0; i--) {
+        printf("%d", (complemento2 >> i) & 1);
+    }
+}
+
 int main()
 {
     int n;
     scanf("%d", &n);
     
-    baseBCD(n);
+    complemento2(n);
 
     return 0;
 }
