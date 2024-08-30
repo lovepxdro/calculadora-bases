@@ -4,10 +4,102 @@
 // versão 0.3 feita no dia 29/08/24 às 19:39 > criei a função de converter para a base 16
 // versão 0.4 feita no dia 29/08/24 às 19:41 > criei a função de converter para a base bcd
 // versão 0.5 feita no dia 30/08/24 às 14:20 > criei a função de converter com complemento a 2
-// versão 0.6 feita no dia 30/08/24 às 19:34 > criei a função de converter para float e double
+// versão 0.6 feita no dia 30/08/24 às 19:34 > criei a função de converter decimal para float e double
+// versão 1.0 feita no dia 30/08/24 às 19:58 > criei uma função de menu e organizei o código
 
 #include <stdio.h>
 #include <stdint.h>
+
+void baseDois(int n);
+void baseOito(int n);
+void baseDezesseis(int n);
+void baseBCD(int n);
+void complemento2(int n);
+void printFloat(uint32_t num);
+void printDouble(uint64_t num);
+void floatToBinary(float f);
+void doubleToBinary(double d);
+void menu();
+
+int main() {
+    menu();
+    return 0;
+}
+
+void menu() {
+    int choice, n;
+    float f;
+    double d;
+
+    do {
+        printf("\nMenu:\n");
+        printf("1. Converter para Binário\n");
+        printf("2. Converter para Octal\n");
+        printf("3. Converter para Hexadecimal\n");
+        printf("4. Converter para BCD\n");
+        printf("5. Converter para Complemento de 2\n");
+        printf("6. Converter Float para Binário\n");
+        printf("7. Converter Double para Binário\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &choice);
+        printf("\n");
+
+        switch(choice) {
+            case 1:
+                printf("Digite um número inteiro: ");
+                scanf("%d", &n);
+                printf("Binário: ");
+                baseDois(n);
+                printf("\n");
+                break;
+            case 2:
+                printf("Digite um número inteiro: ");
+                scanf("%d", &n);
+                printf("Octal: ");
+                baseOito(n);
+                printf("\n");
+                break;
+            case 3:
+                printf("Digite um número inteiro: ");
+                scanf("%d", &n);
+                printf("Hexadecimal: ");
+                baseDezesseis(n);
+                printf("\n");
+                break;
+            case 4:
+                printf("Digite um número inteiro: ");
+                scanf("%d", &n);
+                printf("BCD: ");
+                baseBCD(n);
+                printf("\n");
+                break;
+            case 5:
+                printf("Digite um número inteiro: ");
+                scanf("%d", &n);
+                printf("Complemento de 2: ");
+                complemento2(n);
+                printf("\n");
+                break;
+            case 6:
+                printf("Digite um número float: ");
+                scanf("%f", &f);
+                floatToBinary(f);
+                break;
+            case 7:
+                printf("Digite um número double: ");
+                scanf("%lf", &d);
+                doubleToBinary(d);
+                break;
+            case 0:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opção inválida! Tente novamente.\n");
+                break;
+        }
+    } while (choice != 0);
+}
 
 void baseDois (int n){
     if(n>1){
@@ -155,12 +247,4 @@ void doubleToBinary(double d) {
     printf("Expoente: %llu\n", exponent);
     printf("Expoente com viés: %lld\n", (long long)(exponent - 1023));
     printf("Fração: 0x%llX\n", fraction);
-}
-
-int main()
-{
-    int n;
-    scanf("%d", &n);
-
-    return 0;
 }
